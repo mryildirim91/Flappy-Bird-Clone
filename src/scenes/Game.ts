@@ -51,14 +51,13 @@ export default class Game extends Phaser.Scene
 
 	public update() : void
 	{
-		// Rotate the bird based on its velocity
 		if (this.player.body !== null && this.player.body.velocity.y < 0)
 		{
-			this.player.setAngle(-20); // Slightly tilt up
+			this.player.setAngle(-20);
 		}
 		else
 		{
-			this.player.setAngle(20); // Slightly tilt down
+			this.player.setAngle(20);
 		}
 
 		if (this.player.y > 600)
