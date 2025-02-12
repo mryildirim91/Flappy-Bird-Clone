@@ -18,6 +18,19 @@
                 "url": "assets/logo.png",
                 "type": "image",
                 "key": "logo"
+            },
+            {
+                "url": "assets/PipeStyle1.png",
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 80,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "PipeStyle1"
             }
         ]
     },
