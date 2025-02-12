@@ -15,7 +15,7 @@ export default class Game extends Phaser.Scene
 
 	public editorCreate() : void
 	{
-		const background6 : TileSprite = this.add.tileSprite(512, 384, 256, 256, "Background6");
+		const background6 : TileSprite = this.add.tileSprite(512, 384, 256, 256, "Background5");
 		background6.scaleX = 4;
 		background6.scaleY = 3;
 		background6.tileScaleX = 0.75;

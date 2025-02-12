@@ -11,7 +11,7 @@ export default class MainMenu extends Phaser.Scene
 
 	public editorCreate(): void
 	{
-		const background : TileSprite = this.add.tileSprite(512, 384, 256, 256, "Background6");
+		const background : TileSprite = this.add.tileSprite(512, 384, 256, 256, "Background5");
 		background.scaleX = 4;
 		background.scaleY = 3;
 		background.tileScaleX = 0.75;
