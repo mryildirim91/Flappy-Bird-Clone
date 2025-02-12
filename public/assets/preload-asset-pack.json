@@ -31,6 +31,32 @@
                 },
                 "type": "spritesheet",
                 "key": "PipeStyle1"
+            },
+            {
+                "url": "assets/SimpleStyle1.png",
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 32,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "SimpleStyle1"
+            },
+            {
+                "url": "assets/TileStyle1.png",
+                "frameConfig": {
+                    "frameWidth": 32,
+                    "frameHeight": 32,
+                    "startFrame": 0,
+                    "endFrame": -1,
+                    "spacing": 0,
+                    "margin": 0
+                },
+                "type": "spritesheet",
+                "key": "TileStyle1"
             }
         ]
     },
