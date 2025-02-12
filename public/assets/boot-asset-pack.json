@@ -2,11 +2,6 @@
     "section1": {
         "files": [
             {
-                "url": "assets/bg.png",
-                "type": "image",
-                "key": "background"
-            },
-            {
                 "url": "assets/Background/Background1.png",
                 "type": "image",
                 "key": "Background1"
