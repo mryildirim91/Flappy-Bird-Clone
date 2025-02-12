@@ -1,0 +1,82 @@
+{
+    "id": "32e61890-e95a-4d4f-8c33-877c1b27b0b5",
+    "sceneType": "SCENE",
+    "settings": {
+        "exportClass": true,
+        "autoImport": true,
+        "preloadPackFiles": [],
+        "createMethodName": "editorCreate",
+        "sceneKey": "MainMenu",
+        "compilerOutputLanguage": "TYPE_SCRIPT",
+        "borderWidth": 1024,
+        "borderHeight": 768
+    },
+    "displayList": [
+        {
+            "type": "TileSprite",
+            "id": "985621e7-cdcb-4262-8f48-6f75daca1daf",
+            "label": "background",
+            "texture": {
+                "key": "Background6"
+            },
+            "x": 512,
+            "y": 384,
+            "scaleX": 4,
+            "scaleY": 3,
+            "width": 256,
+            "height": 256,
+            "tileScaleX": 0.75
+        },
+        {
+            "type": "Text",
+            "id": "849c46c6-b507-4dba-9e0b-1d60465186c2",
+            "label": "headerText",
+            "x": 512,
+            "y": 60,
+            "scaleX": 2,
+            "scaleY": 2,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "Flappy Bird",
+            "align": "center",
+            "fontFamily": "Arial Black",
+            "fontSize": "38px",
+            "color": "#ffffff",
+            "stroke": "#000000",
+            "strokeThickness": 8
+        },
+        {
+            "type": "Image",
+            "id": "202b4c81-b82c-4a21-8c33-1659ccf94bda",
+            "label": "playButton",
+            "texture": {
+                "key": "AllBird1",
+                "frame": 0
+            },
+            "x": 512,
+            "y": 675,
+            "scaleX": 10,
+            "scaleY": 10
+        },
+        {
+            "type": "Text",
+            "id": "b2e24d3f-bef7-4006-8386-d0d2e9493c53",
+            "label": "playText",
+            "x": 517,
+            "y": 691,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "Play",
+            "align": "center",
+            "fontSize": "46px",
+            "fontStyle": "bold"
+        }
+    ],
+    "plainObjects": [],
+    "meta": {
+        "app": "Phaser Editor - Scene Editor",
+        "url": "https://phaser.io/editor",
+        "contentType": "phasereditor2d.core.scene.SceneContentType",
+        "version": 5
+    }
+}

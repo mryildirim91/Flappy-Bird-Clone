@@ -1,0 +1,69 @@
+{
+    "section1": {
+        "files": [
+            {
+                "url": "assets/bg.png",
+                "type": "image",
+                "key": "background"
+            },
+            {
+                "url": "assets/Background/Background1.png",
+                "type": "image",
+                "key": "Background1"
+            },
+            {
+                "url": "assets/Background/Background2.png",
+                "type": "image",
+                "key": "Background2"
+            },
+            {
+                "url": "assets/Background/Background3.png",
+                "type": "image",
+                "key": "Background3"
+            },
+            {
+                "url": "assets/Background/Background4.png",
+                "type": "image",
+                "key": "Background4"
+            },
+            {
+                "url": "assets/Background/Background5.png",
+                "type": "image",
+                "key": "Background5"
+            },
+            {
+                "url": "assets/Background/Background6.png",
+                "type": "image",
+                "key": "Background6"
+            },
+            {
+                "url": "assets/Background/Background6-Sheet.png",
+                "type": "image",
+                "key": "Background6-Sheet"
+            },
+            {
+                "url": "assets/Background/Background7.png",
+                "type": "image",
+                "key": "Background7"
+            },
+            {
+                "url": "assets/Background/Background8.png",
+                "type": "image",
+                "key": "Background8"
+            },
+            {
+                "url": "assets/Background/Background9.png",
+                "type": "image",
+                "key": "Background9"
+            }
+        ]
+    },
+    "meta": {
+        "app": "Phaser Editor 2D - Asset Pack Editor",
+        "contentType": "phasereditor2d.pack.core.AssetContentType",
+        "url": "https://phasereditor2d.com",
+        "version": 2,
+        "showAllFilesInBlocks": false,
+        "visible": true
+    }
+}

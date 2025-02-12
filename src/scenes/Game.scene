@@ -1,0 +1,67 @@
+{
+    "id": "fe9dec0b-9530-4ff6-a5a1-14fb1c57bb41",
+    "sceneType": "SCENE",
+    "settings": {
+        "exportClass": true,
+        "autoImport": true,
+        "preloadPackFiles": [],
+        "createMethodName": "editorCreate",
+        "sceneKey": "Game",
+        "compilerOutputLanguage": "TYPE_SCRIPT",
+        "borderWidth": 1024,
+        "borderHeight": 768
+    },
+    "displayList": [
+        {
+            "type": "TileSprite",
+            "id": "f323568d-b8b7-4b97-8c42-a9d19914731b",
+            "label": "background6",
+            "texture": {
+                "key": "Background6"
+            },
+            "x": 512,
+            "y": 384,
+            "scaleX": 4,
+            "scaleY": 3,
+            "width": 256,
+            "height": 256,
+            "tileScaleX": 0.75
+        },
+        {
+            "type": "Text",
+            "id": "14c27edb-9072-4bd8-8db8-18bd78fefb3a",
+            "label": "text",
+            "x": 85,
+            "y": 57,
+            "originX": 0.5,
+            "originY": 0.5,
+            "text": "Score:",
+            "align": "center",
+            "fontFamily": "Arial Black",
+            "fontSize": "38px",
+            "color": "#ffffff",
+            "stroke": "#000000",
+            "strokeThickness": 8
+        },
+        {
+            "type": "Image",
+            "id": "16c5ea08-2ae0-4b59-b746-c7e097a58420",
+            "label": "allBird124",
+            "texture": {
+                "key": "AllBird1",
+                "frame": 24
+            },
+            "x": 65,
+            "y": 476,
+            "scaleX": 5,
+            "scaleY": 5
+        }
+    ],
+    "plainObjects": [],
+    "meta": {
+        "app": "Phaser Editor - Scene Editor",
+        "url": "https://phaser.io/editor",
+        "contentType": "phasereditor2d.core.scene.SceneContentType",
+        "version": 5
+    }
+}
