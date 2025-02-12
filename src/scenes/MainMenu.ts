@@ -4,7 +4,6 @@ import Image = Phaser.GameObjects.Image;
 
 export default class MainMenu extends Phaser.Scene
 {
-
 	public constructor()
 	{
 		super("MainMenu");

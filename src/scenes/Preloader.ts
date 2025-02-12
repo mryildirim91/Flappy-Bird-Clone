@@ -1,30 +1,23 @@
-// You can write more code here
+import Rectangle = Phaser.GameObjects.Rectangle;
+import TileSprite = Phaser.GameObjects.TileSprite;
 
-/* START OF COMPILED CODE */
-
-/* START-USER-IMPORTS */
-/* END-USER-IMPORTS */
-
-export default class Preloader extends Phaser.Scene {
-
-	constructor() {
+export default class Preloader extends Phaser.Scene
+{
+	public constructor()
+	{
 		super("Preloader");
-
-		/* START-USER-CTR-CODE */
-		// Write your code here.
-		/* END-USER-CTR-CODE */
 	}
 
-	editorCreate(): void {
-
+	public editorCreate(): void
+	{
 		// progressBar
-		const progressBar = this.add.rectangle(512, 384, 468, 32);
+		const progressBar : Rectangle = this.add.rectangle(512, 384, 468, 32);
 		progressBar.isFilled = true;
 		progressBar.fillColor = 14737632;
 		progressBar.isStroked = true;
 
 		// background6
-		const background6 = this.add.tileSprite(512, 384, 256, 256, "Background6");
+		const background6 : TileSprite = this.add.tileSprite(512, 384, 256, 256, "Background6");
 		background6.scaleX = 4;
 		background6.scaleY = 3;
 		background6.tileScaleX = 0.75;
@@ -36,43 +29,25 @@ export default class Preloader extends Phaser.Scene {
 
 	private progressBar!: Phaser.GameObjects.Rectangle;
 
-	/* START-USER-CODE */
-
-	// Write your code here
-    init ()
+    public init () : void
     {
-
 		this.editorCreate();
 
-        //  This is the progress bar itself. It will increase in size from the left based on the % of progress.
-        const bar = this.add.rectangle(this.progressBar.x - this.progressBar.width / 2 + 4, this.progressBar.y, 4, 28, 0xffffff)
+        const bar : Rectangle = this.add.rectangle(this.progressBar.x - this.progressBar.width / 2 + 4, this.progressBar.y, 4, 28, 0xffffff)
 
-        //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
-        this.load.on('progress', (progress: number) => {
-
-            //  Update the progress bar (our bar is 464px wide, so 100% = 464px)
+        this.load.on('progress', (progress: number) : void =>
+		{
             bar.width = 4 + (460 * progress);
-
         });
     }
 
-    preload ()
+    public preload () : void
     {
-        // Use the 'pack' file to load in any assets you need for this scene
         this.load.pack('preload', 'assets/preload-asset-pack.json');
     }
 
-    create ()
+    public create () : void
     {
-        //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
-        //  For example, you can define global animations here, so we can use them in other scenes.
-
-        //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
         this.scene.start('MainMenu');
     }
-    /* END-USER-CODE */
 }
-
-/* END OF COMPILED CODE */
-
-// You can write more code here
