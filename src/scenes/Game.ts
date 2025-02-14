@@ -1,6 +1,8 @@
 import Text = Phaser.GameObjects.Text;
 import TileSprite = Phaser.GameObjects.TileSprite;
 import GameObject = Phaser.GameObjects.GameObject;
+import Sprite = Phaser.Physics.Arcade.Sprite;
+import Image = Phaser.GameObjects.Image;
 
 export default class Game extends Phaser.Scene
 {
@@ -8,6 +10,10 @@ export default class Game extends Phaser.Scene
 	private jumpVelocity : number = -200;
 	private pipeGroup!: Phaser.Physics.Arcade.Group;
 	private pipeSpawnTimer!: Phaser.Time.TimerEvent;
+	private score : number = 0;
+	private scoreText : Text;
+	private isGameOver : boolean =  false;
+	private gameOverTimer :  Phaser.Time.TimerEvent;
 
 	public constructor()
 	{
@@ -16,22 +22,32 @@ export default class Game extends Phaser.Scene
 
 	public editorCreate() : void
 	{
+		this.isGameOver = false;
 		const background6 : TileSprite = this.add.tileSprite(512, 384, 256, 256, "Background5");
 		background6.scaleX = 4;
 		background6.scaleY = 3;
 		background6.tileScaleX = 0.75;
 		background6.setDepth(-1);
 
-		const text : Text = this.add.text(85, 57, "", {});
-		text.setOrigin(0.5, 0.5);
-		text.text = "Score:";
-		text.setStyle({ "align": "center", "color": "#ffffff", "fontFamily": "Arial Black", "fontSize": "38px", "stroke": "#000000", "strokeThickness": 8 });
-		text.setDepth(5)
+		this.scoreText = this.add.text(120, 57, "", {});
+		this.scoreText.setOrigin(0.5, 0.5);
+		this.scoreText.text = "Score:";
+		this.scoreText.setStyle({ "align": "center", "color": "#ffffff", "fontFamily": "Arial Black", "fontSize": "38px", "stroke": "#000000", "strokeThickness": 8 });
+		this.scoreText.setDepth(5)
 
-		this.player = this.physics.add.sprite(65, 476, "AllBird1", 24).setGravityY(800).setCollideWorldBounds(true);
+		const colliderSizeModifier: number = 0.5;
+		this.player = this.physics.add.sprite(65, 476, "AllBird1", 0).setGravityY(800).setCollideWorldBounds(true);
+		this.player.body!.setSize(this.player.width * colliderSizeModifier, this.player.height * colliderSizeModifier, true);
 		this.player.scaleX = 4;
 		this.player.scaleY = 4;
 		this.player.setDepth(4)
+
+		this.anims.create({
+			key: "flap", // ✅ Animation name
+			frames: this.anims.generateFrameNumbers("AllBird1", { start: 0, end: 2 }),
+			frameRate: 10, // ✅ Adjust speed of flapping
+			repeat: -1 // ✅ Loop animation
+		});
 
 		this.input.on("pointerdown", this.fly, this);
 		this.input.on("pointerup", this.fall, this);
@@ -66,28 +82,28 @@ export default class Game extends Phaser.Scene
 			this.player.setAngle(20);
 		}
 
-		if (this.player.y > 600)
-		{
-			//this.scene.restart();
-		}
-
 		this.destroyPipe();
 	}
 
 	private fly() : void
 	{
+		if (this.isGameOver) return;
 		this.player.setGravityY(0);
 		this.player.setVelocityY(this.jumpVelocity);
+		this.player.play("flap", true);
 	}
 
 	private fall() : void
 	{
+		if (this.isGameOver) return;
 		this.player.setGravityY(300);
+		this.player.stop()
 	}
 
 	private spawnPipe(): void
 	{
 		const pipeX = 1200; // Spawn just beyond the right side
+		const secondPipeOffset = 768;
 		let pipeY : number = Phaser.Math.Between(0, 170); // Random height for variety
 
 		const randomPipe : number = Phaser.Math.Between(0, 7);
@@ -96,7 +112,7 @@ export default class Game extends Phaser.Scene
 		{
 			if(i == 1)
 			{
-				pipeY += 768;
+				pipeY += secondPipeOffset;
 			}
 
 			const pipe = this.pipeGroup.create(pipeX, pipeY, "PipeStyle1", randomPipe);
@@ -108,9 +124,22 @@ export default class Game extends Phaser.Scene
 			pipe.body!.allowGravity = false;
 			pipe.body!.setSize(pipe.width, pipe.height, true);
 		}
+
+		const scoreZone : Sprite = this.physics.add.sprite(pipeX + 100, secondPipeOffset * 0.5, "").setOrigin(0.5, 0.5).setAlpha(0);
+		scoreZone.setSize(50, 500);
+		scoreZone.setDepth(2)
+		scoreZone.setImmovable(true);
+		scoreZone.setVelocityX(-200);
+		scoreZone.body!.allowGravity = false;
+
+		this.physics.add.overlap(this.player, scoreZone, () : void => {
+			scoreZone.destroy();
+			this.score += 1;
+			this.scoreText.setText("Score: " + this.score);
+		}, undefined, this);
 	}
 
-	private destroyPipe() :void
+	private destroyPipe() : void
 	{
 		this.pipeGroup.getChildren().forEach((pipe : GameObject) : void =>
 		{
@@ -123,20 +152,67 @@ export default class Game extends Phaser.Scene
 
 	private gameOver(): void
 	{
-		// ✅ Stop only the player, not the pipes
-		this.player.setVelocity(0, 0); // Stop movement
-		this.player.setTint(0xff0000); // Optional: Tint red to show game over
-		//this.player.anims.stop(); // Optional: Stop animation
+		this.isGameOver = true;
+		this.cameras.main.shake(200, 0.01);
 
-		// ✅ Disable physics for the player only, NOT the whole physics world
+		this.player.setVelocity(0, 0);
+		this.player.anims.stop();
 		this.physics.world.disableBody(this.player.body);
+		this.pipeSpawnTimer.remove();
+		this.stopPipes()
 
-		// ✅ Pipes keep moving, but stop spawning
-		this.pipeSpawnTimer.remove(); // Stop new pipes from spawning
-
-		//this.time.delayedCall(1000, () => { // Restart after 1 sec
-			//this.scene.restart();
-		//});
+		this.gameOverTimer = this.time.addEvent({
+			delay: 1500,
+			callback: this.openGameOverUI,
+			callbackScope: this,
+			loop: false
+		});
 	}
 
+	private openGameOverUI() : void
+	{
+		const gameOverText : Text = this.add.text(512, 768 * 0.5, "", {});
+		gameOverText.scaleX = 2;
+		gameOverText.scaleY = 2;
+		gameOverText.setOrigin(0.5, 0.5);
+		gameOverText.setDepth(10)
+		gameOverText.text = "GAME OVER";
+		gameOverText.setStyle({ "align": "center", "color": "#ffffff", "fontFamily": "Arial Black", "fontSize": "38px", "stroke": "#000000", "strokeThickness": 8 });
+
+		const replayButton : Image = this.add.image(512, 675, "AllBird1", 0).setInteractive();
+		replayButton.scaleX = 10;
+		replayButton.scaleY = 10;
+		replayButton.setDepth(11)
+
+		replayButton.on("pointerover", () : void =>
+		{
+			replayButton.setTexture("AllBird1", 12)
+		});
+
+		replayButton.on("pointerout", () : void =>
+		{
+			replayButton.setTexture("AllBird1", 0)
+		});
+
+		replayButton.on("pointerdown", () : void =>
+		{
+			this.scene.restart();
+		})
+
+		const replayText : Text = this.add.text(517, 691, "", {});
+		replayText.setOrigin(0.5, 0.5);
+		replayText.text = "Replay";
+		replayText.setStyle({ "align": "center", "fontSize": "46px", "fontStyle": "bold" });
+		replayText.setDepth(12)
+	}
+
+	private stopPipes() : void
+	{
+		this.pipeGroup.getChildren().forEach((pipe : GameObject) =>
+		{
+			if (pipe instanceof Phaser.Physics.Arcade.Sprite) {
+				pipe.setVelocityX(0);
+			}
+		});
+	}
 }
