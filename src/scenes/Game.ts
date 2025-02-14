@@ -13,7 +13,7 @@ export default class Game extends Phaser.Scene
 	private score : number = 0;
 	private scoreText : Text;
 	private isGameOver : boolean =  false;
-	private gameOverTimer :  Phaser.Time.TimerEvent;
+	private gameOverTimer! : Phaser.Time.TimerEvent;
 
 	public constructor()
 	{
@@ -159,7 +159,7 @@ export default class Game extends Phaser.Scene
 
 		this.player.setVelocity(0, 0);
 		this.player.anims.remove("flap");
-		this.physics.world.disableBody(this.player.body);
+		this.physics.world.disableBody(this.player.body!);
 		this.pipeSpawnTimer.remove();
 		this.stopPipes()
 
@@ -206,6 +206,8 @@ export default class Game extends Phaser.Scene
 		replayText.text = "Replay";
 		replayText.setStyle({ "align": "center", "fontSize": "46px", "fontStyle": "bold" });
 		replayText.setDepth(12)
+
+		this.gameOverTimer.remove();
 	}
 
 	private stopPipes() : void
