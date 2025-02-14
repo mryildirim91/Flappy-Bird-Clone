@@ -23,6 +23,7 @@ export default class Game extends Phaser.Scene
 	public editorCreate() : void
 	{
 		this.isGameOver = false;
+		this.score = 0;
 		const background6 : TileSprite = this.add.tileSprite(512, 384, 256, 256, "Background5");
 		background6.scaleX = 4;
 		background6.scaleY = 3;
@@ -31,7 +32,7 @@ export default class Game extends Phaser.Scene
 
 		this.scoreText = this.add.text(120, 57, "", {});
 		this.scoreText.setOrigin(0.5, 0.5);
-		this.scoreText.text = "Score:";
+		this.scoreText.setText("Score: " + this.score);
 		this.scoreText.setStyle({ "align": "center", "color": "#ffffff", "fontFamily": "Arial Black", "fontSize": "38px", "stroke": "#000000", "strokeThickness": 8 });
 		this.scoreText.setDepth(5)
 
@@ -42,11 +43,11 @@ export default class Game extends Phaser.Scene
 		this.player.scaleY = 4;
 		this.player.setDepth(4)
 
-		this.anims.create({
-			key: "flap", // ✅ Animation name
+		this.player.anims.create({
+			key: "flap",
 			frames: this.anims.generateFrameNumbers("AllBird1", { start: 0, end: 2 }),
-			frameRate: 10, // ✅ Adjust speed of flapping
-			repeat: -1 // ✅ Loop animation
+			frameRate: 10,
+			repeat: -1
 		});
 
 		this.input.on("pointerdown", this.fly, this);
@@ -62,6 +63,9 @@ export default class Game extends Phaser.Scene
 			callbackScope: this,
 			loop: true
 		});
+
+		this.player.play("flap", true);
+
 		this.physics.add.collider(this.player, this.pipeGroup, this.gameOver, undefined, this);
 		this.events.emit("scene-awake");
 	}
@@ -90,14 +94,12 @@ export default class Game extends Phaser.Scene
 		if (this.isGameOver) return;
 		this.player.setGravityY(0);
 		this.player.setVelocityY(this.jumpVelocity);
-		this.player.play("flap", true);
 	}
 
 	private fall() : void
 	{
 		if (this.isGameOver) return;
 		this.player.setGravityY(300);
-		this.player.stop()
 	}
 
 	private spawnPipe(): void
@@ -156,7 +158,7 @@ export default class Game extends Phaser.Scene
 		this.cameras.main.shake(200, 0.01);
 
 		this.player.setVelocity(0, 0);
-		this.player.anims.stop();
+		this.player.anims.remove("flap");
 		this.physics.world.disableBody(this.player.body);
 		this.pipeSpawnTimer.remove();
 		this.stopPipes()
