@@ -24,7 +24,7 @@ export default class Game extends Phaser.Scene
 	{
 		this.isGameOver = false;
 		this.score = 0;
-		const background6 : TileSprite = this.add.tileSprite(512, 384, 256, 256, "Background5");
+		const background6 : TileSprite = this.add.tileSprite(this.scale.width / 2 , this.scale.height / 2, 256, 256, "Background5");
 		background6.scaleX = 4;
 		background6.scaleY = 3;
 		background6.tileScaleX = 0.75;
@@ -104,8 +104,8 @@ export default class Game extends Phaser.Scene
 
 	private spawnPipe(): void
 	{
-		const pipeX = 1200; // Spawn just beyond the right side
-		const secondPipeOffset = 768;
+		const pipeX : number = this.scale.width + 200; // Spawn just beyond the right side
+		const secondPipeOffset : number = this.scale.height;
 		let pipeY : number = Phaser.Math.Between(0, 170); // Random height for variety
 
 		const randomPipe : number = Phaser.Math.Between(0, 7);
@@ -127,7 +127,7 @@ export default class Game extends Phaser.Scene
 			pipe.body!.setSize(pipe.width, pipe.height, true);
 		}
 
-		const scoreZone : Sprite = this.physics.add.sprite(pipeX + 100, secondPipeOffset * 0.5, "").setOrigin(0.5, 0.5).setAlpha(0);
+		const scoreZone : Sprite = this.physics.add.sprite(pipeX + 100, secondPipeOffset / 2, "").setOrigin(0.5, 0.5).setAlpha(0);
 		scoreZone.setSize(50, 500);
 		scoreZone.setDepth(2)
 		scoreZone.setImmovable(true);
@@ -173,7 +173,7 @@ export default class Game extends Phaser.Scene
 
 	private openGameOverUI() : void
 	{
-		const gameOverText : Text = this.add.text(512, 768 * 0.5, "", {});
+		const gameOverText : Text = this.add.text(this.scale.width / 2, this.scale.height / 2, "", {});
 		gameOverText.scaleX = 2;
 		gameOverText.scaleY = 2;
 		gameOverText.setOrigin(0.5, 0.5);
@@ -181,7 +181,7 @@ export default class Game extends Phaser.Scene
 		gameOverText.text = "GAME OVER";
 		gameOverText.setStyle({ "align": "center", "color": "#ffffff", "fontFamily": "Arial Black", "fontSize": "38px", "stroke": "#000000", "strokeThickness": 8 });
 
-		const replayButton : Image = this.add.image(512, 675, "AllBird1", 0).setInteractive();
+		const replayButton : Image = this.add.image(this.scale.width / 2, this.scale.width / 1.5, "AllBird1", 0).setInteractive();
 		replayButton.scaleX = 10;
 		replayButton.scaleY = 10;
 		replayButton.setDepth(11)
@@ -201,7 +201,7 @@ export default class Game extends Phaser.Scene
 			this.scene.restart();
 		})
 
-		const replayText : Text = this.add.text(517, 691, "", {});
+		const replayText : Text = this.add.text(this.scale.width / 2, this.scale.width / 1.5, "", {});
 		replayText.setOrigin(0.5, 0.5);
 		replayText.text = "Replay";
 		replayText.setStyle({ "align": "center", "fontSize": "46px", "fontStyle": "bold" });
